@@ -1,0 +1,11 @@
+//este es un comentario
+//
+#abc12==$&&==¡p 45.34*9-7+6%4^2¿cual es?12°centigrados45¬raro
+45.
+
+4.
+
+"# $ ¿ ? ¡ ° ¬"
+fn principal{
+    imprimeln!("Hola Mundo!");:,4.5{[]}
+}
