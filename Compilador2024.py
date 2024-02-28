@@ -35,7 +35,7 @@ def colCar( c ):
 
 
 matran = [
-    [1,   1,   18,  2,   7,   8,   19,  14,  12,  5,   15,  10,  18 ,21 ], #0  #cambie 18, 21 
+    [1,   1,   18,  2,   7,   8,   19,  14,  12,  5,   15,  10,  18 ,21 ], #0  
     [1,   1,   ACP, 1,   ACP, ACP, 1,   ACP, ACP, ACP, ACP, ACP, ACP,ACP], #1
     [ACP, ACP, 3,   2,   ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP], #2
     [ERR, ERR, ERR, 4,   ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR,ERR], #3
