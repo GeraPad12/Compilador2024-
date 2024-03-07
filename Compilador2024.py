@@ -142,7 +142,6 @@ def lexico():
     elif estado == 6: 
         tok = 'Com'
         lex = '//'
-        print(tok)
     elif estAnt == 13:
         tok = 'CtA'
     elif estAnt == 14:
