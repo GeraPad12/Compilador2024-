@@ -34,30 +34,29 @@ def colCar( c ):
     return ERR
 
 
-matran = [                  
-            [1,   1,   18,  2,   7,   8,   19,  14,  12,  5,   15,  10,  18 ,21 ,22 ], #0   
-            [1,   1,   ACP, 1,   ACP, ACP, 1,   ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #1
-            [ACP, ACP, 3,   2,   ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #2
-            [ERR, ERR, ERR, 4,   ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR,ERR,ERR], #3
-            [ACP, ACP, ACP, 4,   ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #4
-            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, 6,   ACP, ACP, ACP,ACP,ACP], #5  
-            [6,   6,   6,   6,   6,   6,   6,   6,   6,   6,   6,   6  , 6  ,6  , 6 ], #6
-            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP, ACP], #7
-            [ERR, ERR, ERR, ERR, ERR, 9,   ERR, ERR, ERR, ERR, ERR, ERR, ERR,ERR,ERR], #8
-            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #9
-            [ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, 9  , ERR,ERR,ERR], #10
-            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #11
-            [12,  12,  12,  12,  12,  12,  12,  12,  13,  12,  12,  12,  12 ,12 , 12], #12
-            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #13
-            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, 20,  ACP, ACP, ACP, ACP, ACP,ACP,ACP], #14 aqui el 20 para ==
-            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, 16,  ACP, ACP, ACP, ACP, ACP,ACP,ACP], #15 aqui edite el 16 para <= >=
-            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #16 = 
-            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #17 = OPR
-            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #18 DLM
-            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, 17,  ACP, ACP, ACP, ACP, ACP,ACP,ACP], #19 ! OpL
-            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #20 agregue ese para el == OpR
-            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP] #21 SIMBOLOS RAROS #$?¡¿ regresa Â
-
+matran = [  #letra  #_   #*    #dig  #opa  #&   #!   #=   #""  #/   #<>  #|  #dlm #sym    
+            [1,     1,   18,   2,    7,    8,   19,  14,  12,  5,   15,  10,  18  ,21 ], #0   
+            [1,     1,   ACP,  1,    ACP,  ACP, 1,   ACP, ACP, ACP, ACP, ACP, ACP, ACP], #1
+            [ACP,   ACP, 3,    2,    ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #2
+            [ERR,   ERR, ERR,  4,    ERR,  ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR], #3
+            [ACP,   ACP, ACP,  4,    ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #4
+            [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, 6,   ACP, ACP, ACP, ACP], #5  
+            [6,     6,   6,    6,    6,    6,   6,   6,   6,   6,   6,   6  , 6  , 6  ], #6
+            [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #7
+            [ERR,   ERR, ERR,  ERR,  ERR,  9,   ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR], #8
+            [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #9
+            [ERR,   ERR, ERR,  ERR,  ERR,  ERR, ERR, ERR, ERR, ERR, ERR, 9  , ERR, ERR], #10
+            [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #11
+            [12,    12,  12,   12,   12,   12,  12,  12,  13,  12,  12,  12,  12 , 12 ], #12 si llega " se va al 13
+            [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #13
+            [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, 20,  ACP, ACP, ACP, ACP, ACP, ACP], #14 aqui el 20 para ==
+            [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, 16,  ACP, ACP, ACP, ACP, ACP, ACP], #15 aqui edite el 16 para <= >=
+            [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #16 = 
+            [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #17 = OPR
+            [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #18 DLM
+            [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, 17,  ACP, ACP, ACP, ACP, ACP, ACP], #19 ! OpL
+            [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #20 agregue este para el == OpR
+            [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP]  #21 SYM
 ]
 
 opa = ['+', '-', '*', '%', '^']
