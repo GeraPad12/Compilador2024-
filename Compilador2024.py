@@ -34,29 +34,30 @@ def colCar( c ):
     return ERR
 
 
-matran = [
-    [1,   1,   18,  2,   7,   8,   19,  14,  12,  5,   15,  10,  18 ,21 ], #0  
-    [1,   1,   ACP, 1,   ACP, ACP, 1,   ACP, ACP, ACP, ACP, ACP, ACP,ACP], #1
-    [ACP, ACP, 3,   2,   ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP], #2
-    [ERR, ERR, ERR, 4,   ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR,ERR], #3
-    [ACP, ACP, ACP, 4,   ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP], #4
-    [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, 6,   ACP, ACP, ACP,ACP], #5  
-    [6,   6,   6,   6,   6,   6,   6,   6,   6,   6,   6,   6  , 6  ,6  ], #6
-    [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP], #7
-    [ERR, ERR, ERR, ERR, ERR, 9,   ERR, ERR, ERR, ERR, ERR, ERR, ERR,ERR], #8
-    [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP], #9
-    [ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, 9  , ERR,ERR], #10
-    [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP], #11
-    [12,  12,  12,  12,  12,  12,  12,  12,  13,  12,  12,  12,  12 ,12 ], #12
-    [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP], #13
-    [ACP, ACP, ACP, ACP, ACP, ACP, ACP, 20,  ACP, ACP, ACP, ACP, ACP,ACP], #14 aqui el 20 para ==
-    [ACP, ACP, ACP, ACP, ACP, ACP, ACP, 16,  ACP, ACP, ACP, ACP, ACP,ACP], #15 aqui edite el 16 para <= >=
-    [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP], #16 = 
-    [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP ], #17 = OPR
-    [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP], #18 DLM
-    [ACP, ACP, ACP, ACP, ACP, ACP, ACP, 17,  ACP, ACP, ACP, ACP, ACP,ACP], #19 ! OpL
-    [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP], #20 agregue ese para el == OpR
-    [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP]  #21 SIMBOLOS RAROS #$?¡¿ regresa Â
+matran = [                  
+            [1,   1,   18,  2,   7,   8,   19,  14,  12,  5,   15,  10,  18 ,21 ,22 ], #0   
+            [1,   1,   ACP, 1,   ACP, ACP, 1,   ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #1
+            [ACP, ACP, 3,   2,   ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #2
+            [ERR, ERR, ERR, 4,   ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR,ERR,ERR], #3
+            [ACP, ACP, ACP, 4,   ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #4
+            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, 6,   ACP, ACP, ACP,ACP,ACP], #5  
+            [6,   6,   6,   6,   6,   6,   6,   6,   6,   6,   6,   6  , 6  ,6  , 6 ], #6
+            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP, ACP], #7
+            [ERR, ERR, ERR, ERR, ERR, 9,   ERR, ERR, ERR, ERR, ERR, ERR, ERR,ERR,ERR], #8
+            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #9
+            [ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR, 9  , ERR,ERR,ERR], #10
+            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #11
+            [12,  12,  12,  12,  12,  12,  12,  12,  13,  12,  12,  12,  12 ,12 , 12], #12
+            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #13
+            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, 20,  ACP, ACP, ACP, ACP, ACP,ACP,ACP], #14 aqui el 20 para ==
+            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, 16,  ACP, ACP, ACP, ACP, ACP,ACP,ACP], #15 aqui edite el 16 para <= >=
+            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #16 = 
+            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #17 = OPR
+            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #18 DLM
+            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, 17,  ACP, ACP, ACP, ACP, ACP,ACP,ACP], #19 ! OpL
+            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP], #20 agregue ese para el == OpR
+            [ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP,ACP,ACP] #21 SIMBOLOS RAROS #$?¡¿ regresa Â
+
 ]
 
 opa = ['+', '-', '*', '%', '^']
@@ -90,6 +91,16 @@ def lexico():
             estado = ACP
             break
 
+#cta error
+        if estado == 12 and x == '\n': break
+        if estado == 12 and x == '\n':
+            estAnt = 12
+            estado = ERR
+            break
+
+
+
+
 #aqui es para la matriz, col <= (numero de columna)
         col = colCar(x)
         if col>=0 and col <= 13 and estado != ERR: 
@@ -108,16 +119,15 @@ def lexico():
     #Errores
     if estAnt == 3:
         tok = 'Dec'
-        erra('Error Lexico', lex + ' cte decimal incompleta')    
+        erra('Error Lexico', lex + ' CtE decimal incompleta')    
     if estAnt == 8:
         tok = 'OpL'
         erra('Error Lexico', lex + ' OpL incompleto')
     if estAnt == 10:
         tok = 'OpL'
         erra('Error Lexico', lex + ' OpL incompleto')
-    if estAnt == 12:
-        tok = 'Cta'
-        erra('Error Lexico', lex + ' cta incompleta')
+    if estado == 12:
+        erra('Error Lexico', lex + ' CtA incompleta')
 
     #Aceptores
     elif estAnt == 1: 
@@ -133,6 +143,7 @@ def lexico():
     elif estado == 6: 
         tok = 'Com'
         lex = '//'
+        print(tok)
     elif estAnt == 13:
         tok = 'CtA'
     elif estAnt == 14:
@@ -146,7 +157,7 @@ def lexico():
     elif estAnt == 20:
         tok = 'OpR'
     elif estAnt == 18:
-        tok = 'Del'    
+        tok = 'Del'   
     elif estAnt == 21:
         tok = 'Sym'
     else: tok = 'NtK'
