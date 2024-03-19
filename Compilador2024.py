@@ -1,3 +1,11 @@
+#############################################################
+# Compilador Lexico                                         #
+# Fecha:      7 de Marzo del 2024                           #
+# Integrantes:                                              #
+#             Jose RafaeL Ruvalcaba Sierra                  #
+#             Carlos Eduardo Arriaga Yañez                  #
+#             Gerardo Yair Padilla Belmonte                 #
+#############################################################
 import sys
 sys.stdout.reconfigure(encoding='utf-8')#caracteres especiales
 
@@ -11,7 +19,7 @@ ctelog = ['verdadero', 'falso']
 palRes = ['fn', 'principal', 'imprimeln!', 'imprimeln', 'entero', 'const',
           'decimal', 'logico', 'alfabetico', 'sea', 'si', 'sino', 
           'para', 'en', 'mientras', 'ciclo', 'regresa', 'leer', 'interrumpe', 
-          'continua']
+          'continua','mut']
 
 
 def colCar( c ):
@@ -34,7 +42,7 @@ def colCar( c ):
     return ERR
 
 
-matran = [  #letra  #_   #*    #dig  #opa  #&   #!   #=   #""  #/   #<>  #|  #dlm #sym    
+matran = [  #letra  #_   #*    #dig  #opa  #&   #!   #=   #""  #/   #<>  #|  #dlm #sym   
             [1,     1,   18,   2,    7,    8,   19,  14,  12,  5,   15,  10,  18  ,21 ], #0   
             [1,     1,   ACP,  1,    ACP,  ACP, 1,   ACP, ACP, ACP, ACP, ACP, ACP, ACP], #1
             [ACP,   ACP, 3,    2,    ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #2
@@ -44,8 +52,8 @@ matran = [  #letra  #_   #*    #dig  #opa  #&   #!   #=   #""  #/   #<>  #|  #dl
             [6,     6,   6,    6,    6,    6,   6,   6,   6,   6,   6,   6  , 6  , 6  ], #6
             [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #7
             [ERR,   ERR, ERR,  ERR,  ERR,  9,   ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR], #8
-            [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #9
-            [ERR,   ERR, ERR,  ERR,  ERR,  ERR, ERR, ERR, ERR, ERR, ERR, 9  , ERR, ERR], #10
+            [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #9 
+            [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, 9  , ACP, ACP], #10 cambien todo ERR por ACP para sym |
             [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #11
             [12,    12,  12,   12,   12,   12,  12,  12,  13,  12,  12,  12,  12 , 12 ], #12 si llega " se va al 13
             [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #13
@@ -59,9 +67,9 @@ matran = [  #letra  #_   #*    #dig  #opa  #&   #!   #=   #""  #/   #<>  #|  #dl
             [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP]  #21 SYM
 ]
 
-opa = ['+', '-', '*', '%', '^']
+opa = ['+', '-', '*', '%', '^','/']
 dlm = ['[', ']', '{', '}', '(', ')', ',', ';', ':']
-sym = ['#','$','¿','?','¡','°','¬']
+sym = ['#','$','¿','?','¡','°','¬', '@', '`', '~','|','&',"\\"]
 def erra(tipo, desc):
     print(tipo, desc)
     bERR = True
@@ -90,12 +98,16 @@ def lexico():
             estado = ACP
             break
 
-#cta error
-        if estado == 12 and x == '\n': break
-        if estado == 12 and x == '\n':
-            estAnt = 12
-            estado = ERR
-            break
+        if estado == 9:
+            if x == '/':  # Es un comentario
+                estado = 6  # Cambia a estado de comentario
+                lex += '/'
+            else:  # Es una división
+                estado = ACP
+                idx -= 1  # Revertir para procesar el siguiente token
+                break
+
+
 
 
 
@@ -119,15 +131,15 @@ def lexico():
     if estAnt == 3:
         tok = 'Dec'
         erra('Error Lexico', lex + ' CtE decimal incompleta')    
-    if estAnt == 8:
-        tok = 'OpL'
-        erra('Error Lexico', lex + ' OpL incompleto')
-    if estAnt == 10:
-        tok = 'OpL'
-        erra('Error Lexico', lex + ' OpL incompleto')
-    if estado == 12:
+    if estAnt == 12:
         erra('Error Lexico', lex + ' CtA incompleta')
 
+    #nuevo
+    elif lex in sym : tok = 'Sym'
+
+    #elif estado == 5 :
+        #tok = 'OpA' 
+        #if lex in opa : tok = 'OpA' #para / division
     #Aceptores
     elif estAnt == 1: 
         tok = 'Ide'
@@ -139,9 +151,12 @@ def lexico():
         tok = 'Dec'
     elif estAnt in [9, 19]:
         tok = 'OpL'
-    elif estado == 6: 
+    elif estado == 6: #para // comentario
         tok = 'Com'
         lex = '//'
+        #print(tok)
+    elif estAnt == 7:
+        tok = 'OpA'
     elif estAnt == 13:
         tok = 'CtA'
     elif estAnt == 14:
@@ -172,6 +187,34 @@ def tokeniza():
     return token, lexema
 
 
+def prgm():
+    global bERR, archE, tok, lex
+    tok, lex = tokeniza()
+    variables()
+    funciones()
+    if not (bERR):
+        print(archE, 'COMPILO con EXITO!!!')
+
+def variables():
+    tok, lex = tokeniza()
+    while lex == 'sea':
+        pass
+    
+    
+
+def funciones():
+    global lex, tok, idx, entrada
+    if idx >= len(entrada): return
+
+    while idx < len(entrada) and lex == 'fn':
+        tok, lex = tokeniza()
+        if tok != 'Ide' and lex != 'principal':
+            erra('Error de sintaxis','se esperaba un Ide y llego' +lex)
+        tok, lex = tokeniza()
+        if lex != '(':
+            erra('Error de sintaxis','se esperaba ( y llego' +lex)
+
+        
 
 if __name__ == '__main__':
     archE = ''
