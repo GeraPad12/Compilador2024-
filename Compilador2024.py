@@ -15,12 +15,37 @@ ACP = 999
 entrada = '' 
 idx = 0
 bERR = False
+lex = ''
+tok = ''
+archE = ''
+conLin = 1
+conCol = 0
+conCod = 1
 ctelog = ['verdadero', 'falso']
 palRes = ['fn', 'principal', 'imprimeln!', 'imprimeln', 'entero', 'const',
           'decimal', 'logico', 'alfabetico', 'sea', 'si', 'sino', 
           'para', 'en', 'mientras', 'ciclo', 'regresa', 'leer', 'interrumpe', 
           'continua','mut']
 
+tabSim = {}
+
+progm = [
+        ]
+
+def initPrgm():
+    global progm
+    for i in range(0, 10000):
+        progm.append([])
+
+
+def insCodigo(Lin, cod):
+    global progm
+    progm[conLin] = cod
+
+
+def insTabSim(key, colec):
+    global tabSim
+    tabSim[key] = colec
 
 def colCar( c ):
     if c.isalpha():     return 0
@@ -42,7 +67,7 @@ def colCar( c ):
     return ERR
 
 
-matran = [  #letra  #_   #*    #dig  #opa  #&   #!   #=   #""  #/   #<>  #|  #dlm #sym   
+matran = [  #letra  #_   #.    #dig  #opa  #&   #!   #=   #""  #/   #<>  #|  #dlm #sym   
             [1,     1,   18,   2,    7,    8,   19,  14,  12,  5,   15,  10,  18  ,21 ], #0   
             [1,     1,   ACP,  1,    ACP,  ACP, 1,   ACP, ACP, ACP, ACP, ACP, ACP, ACP], #1
             [ACP,   ACP, 3,    2,    ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #2
@@ -53,7 +78,7 @@ matran = [  #letra  #_   #*    #dig  #opa  #&   #!   #=   #""  #/   #<>  #|  #dl
             [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #7
             [ERR,   ERR, ERR,  ERR,  ERR,  9,   ERR, ERR, ERR, ERR, ERR, ERR, ERR, ERR], #8
             [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #9 
-            [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, 9  , ACP, ACP], #10 cambien todo ERR por ACP para sym |
+            [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, 11 , ACP, ACP], #10 cambien todo ERR por ACP para sym |
             [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #11
             [12,    12,  12,   12,   12,   12,  12,  12,  13,  12,  12,  12,  12 , 12 ], #12 si llega " se va al 13
             [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP], #13
@@ -67,46 +92,52 @@ matran = [  #letra  #_   #*    #dig  #opa  #&   #!   #=   #""  #/   #<>  #|  #dl
             [ACP,   ACP, ACP,  ACP,  ACP,  ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP, ACP]  #21 SYM
 ]
 
-opa = ['+', '-', '*', '%', '^','/']
+opa = ['+', '-', '*', '%', '^']
 dlm = ['[', ']', '{', '}', '(', ')', ',', ';', ':']
-sym = ['#','$','¿','?','¡','°','¬', '@', '`', '~','|','&',"\\"]
-def erra(tipo, desc):
-    print(tipo, desc)
+sym = ['#','$','¿','?','¡','°','¬', '@', '`', '~',"\\"]
+
+
+def erra(rn, cl, erx, desE):
+    global bERR
     bERR = True
+    print('['+str(rn)+']['+str(cl)+']' +erx + " " + desE)
     
 
 def lexico():
-    global entrada, ERR, ACP, matran, idx
+    global entrada, ERR, ACP, matran, idx, conLin, conCol
     estado = 0
     estAnt = 0
     lex = ''
     tok = ''
     while idx < len(entrada) and estado != ERR and estado != ACP:
-        while(entrada[idx] in [' ', '\n', '\t', ''] 
-              and estado == 0): idx += 1
+        while(idx < len(entrada) and entrada[idx] in [' ', '\n', '\t', ''] 
+              and estado == 0):
+            if entrada[idx] == '\n':
+                conLin +=1
+                conCol = 0
+            elif entrada[idx] == ' ': conCol +=1
+            elif entrada[idx] == '\t': conCol += 4
+            idx += 1
+        if idx >= len(entrada):break
 
         x = entrada[idx]
         idx += 1
+        if x != '\t' and x != '\n' and x != '': conCol +=1
+        if x == '\t': conCol +=4
+        if x == '\n':
+            conLin += 0     #aqui era +=1
+            conCol += 1     #aqui era = 0
 
-        if estado == 6 and x == '\n': break
-        if estado == 8 and x == '\n':
-            estAnt = 8
+        if estado == 6 and x == '\n': 
+            break
+        if estado == 6 and x == '\n':
+            estAnt = 6
             estado = ERR
             break
         if estado == 1 and x in [' ', '\t', '\n']: 
             estAnt = estado
             estado = ACP
             break
-
-        if estado == 9:
-            if x == '/':  # Es un comentario
-                estado = 6  # Cambia a estado de comentario
-                lex += '/'
-            else:  # Es una división
-                estado = ACP
-                idx -= 1  # Revertir para procesar el siguiente token
-                break
-
 
 
 
@@ -119,23 +150,25 @@ def lexico():
             estado = matran[estado][col]
             if estado != ACP and estado != ERR: 
                 lex += x
+        
 
         if estado == ACP or estado == ERR:
-            if estado == ACP: idx -= 1
+            if x == '\n' and conCol < 2:
+                conLin -= 1
+                conCol = 1
+            idx -= 1
+            conCol -= 1
             break
 
-    #print(estAnt, estado)
-    if estado != ACP and estado != ERR: estAnt = estado
 
-    #Errores
+    #print(estAnt, estado, lex)
+    if estado != ACP and estado != ERR: estAnt = estado
     if estAnt == 3:
-        tok = 'Dec'
-        erra('Error Lexico', lex + ' CtE decimal incompleta')    
+        erra(conLin, conCol, 'Error Lexico', lex + ' CtE decimal en ERROR')    
     if estAnt == 12:
-        erra('Error Lexico', lex + ' CtA incompleta')
+        erra(conLin, conCol, 'Error Lexico', lex + ' Cte Alfabetica SIN CERRAR')
 
     #nuevo
-    elif lex in sym : tok = 'Sym'
 
     #elif estado == 5 :
         #tok = 'OpA' 
@@ -149,14 +182,18 @@ def lexico():
         tok = 'Ent'
     elif estAnt == 4:
         tok = 'Dec'
-    elif estAnt in [9, 19]:
+    elif estAnt in [9, 11, 19]:
         tok = 'OpL'
     elif estado == 6: #para // comentario
         tok = 'Com'
         lex = '//'
-        #print(tok)
+        print(tok)
     elif estAnt == 7:
         tok = 'OpA'
+    elif estAnt == 8:
+        tok = 'Sym'
+    elif estAnt == 10:
+        tok = 'Sym'
     elif estAnt == 13:
         tok = 'CtA'
     elif estAnt == 14:
@@ -180,12 +217,75 @@ def lexico():
     return tok, lex #Termina lexico
 
 def tokeniza():
+    global idx, entrada
+    if idx >= len(entrada):
+        return '', ''
+    
     token = 'NtK'
-    while (token in ['Com', 'NtK']):
+    lexema = ''
+    while (token in ['Com', 'NtK'] and idx < len(entrada)):
        token, lexema = lexico()
     
     return token, lexema
 
+def termino():
+    global tok, lex
+    if lex == '(':
+        tok, lex = tokeniza()
+        expr()
+        tok, lex = tokeniza()
+        if lex != ')':
+            erra(conLin, conCol, 'Error de sintaxis', 'Se esperaba ) y llego' +lex)
+    if tok in ['Ent', 'Dec', 'CtA', 'CtL']:
+        if tok in ['Ent', 'Dec', 'CtA']:
+            insCodigo(['LIT', lex, '0'])
+        elif lex == 'Verdadero':
+            insCodigo(conLin, ['LIT', 'V', '0'])
+        elif lex == 'Falso':
+            insCodigo(conLin, ['LIT', 'F', '0'])
+        tok, lex = tokeniza()
+def expr():
+    termino()
+
+def imprimel():
+    global tok, lex
+    tok, lex = tokeniza()
+    if lex != '(':
+            erra(conLin, conCol, 'Error de sintaxis', 'Se esperaba ( y llego' +lex)
+    tok, lex = tokeniza()
+    if lex != ')':
+        sep = ','
+        while sep == ',':
+            expr()
+            insCodigo(conLin, 'OPR', '0', '20')
+            conLin = conLin + 1
+            sep = lex
+
+
+    if lex != ')': tok, lex = tokeniza()
+    if lex != ')':
+            erra(conLin, conCol, 'Error de sintaxis', 'Se esperaba ) y llego' +lex)
+
+def comando():
+    global tok, lex, entrada, idx
+    if lex == 'imprimeln!': imprimel()
+
+def estatutos():
+    global tok, lex, entrada, idx
+    sep = ';'
+    while sep == ';':
+        if lex == ';':
+            tok, lex = tokeniza()
+        if lex == '}': break
+        comando()
+        if lex == ')': 
+            tok, lex = tokeniza()
+        sep = '*'
+        if lex == ';': sep = lex
+        if lex != ';':
+            erra(conLin, conCol, 'Error de sintaxis', 'Se esperaba ; y llego' +lex)
+  
+        
 
 def prgm():
     global bERR, archE, tok, lex
@@ -200,17 +300,37 @@ def variables():
     while lex == 'sea':
         pass
     
-    
+def params():
+    global tok, lex, idx, entrada
+    sec = ','
+    while sec == ',':
+        if tok != 'Ide':
+            erra(conLin, conCol, 'Error de sintaxis', 'Se esperaba Ide y llego' +lex)
+        tok, lex = tokeniza()
+        if lex != ':':
+            erra(conLin, conCol, 'Error de sintaxis', 'Se esperaba : y llego' +lex)
+        tipo()
+        tok, lex = tokeniza()
+        sec = lex
+
+def tipo():
+    global tok, lex
+    tok, lex = tokeniza()
+    if not(lex in ['entero', 'decimal', 'logico', 'palabra']):
+        erra(conLin, conCol, 'Error de sintaxis', 'Se esperaba algo y llego' +lex)
 
 def funciones():
-    global lex, tok, idx, entrada
+    global lex, tok, idx, entrada, conCol, conLin
     if idx >= len(entrada): return
 
     while idx < len(entrada) and lex == 'fn':
         tok, lex = tokeniza()
-        if tok != 'Ide' and lex != 'principal':
-            erra('Error de sintaxis','se esperaba un Ide y llego' +lex)
-        tok, lex = tokeniza()
+        if tok != 'Ide' or lex != 'principal':
+            if lex == 'principal':
+                insTabSim('principal', ['F', 'I', '0', '0'])
+                insTabSim('_P',['I', 'I', str(conCod),'0','0'])
+            erra('Error de sintaxis','se esperaba un Ide o principal y llego' +lex)
+        tok, lex = tokeniza();
         if lex != '(':
             erra('Error de sintaxis','se esperaba ( y llego' +lex)
 
