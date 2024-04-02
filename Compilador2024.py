@@ -354,7 +354,12 @@ if __name__ == '__main__':
             entrada += linea
         aEnt.close()
 
-    print('\n\n' + entrada + '\n\n')    
+
+    lines = entrada.split('\n')
+    for i, line in enumerate(lines):
+        print(f"[{i+1}]{line}")
+    print("\n")
+    
     while idx < len(entrada):
         token, lexema = tokeniza()
         print(token, lexema)
